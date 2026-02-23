@@ -174,6 +174,18 @@ if (filtered.length === 0) {
         });
     });
 
+    document.querySelectorAll('.rejected-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const id = parseInt(e.target.dataset.id);
+            const job = jobs.find(j => j.id === id);
+            if (job && job.status !== 'rejected') {
+                job.status = 'rejected';
+                renderJobs();
+                updateDashboard();
+            }
+        });
+    });
+
      
 
 }
