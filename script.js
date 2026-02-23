@@ -161,8 +161,8 @@ if (filtered.length === 0) {
         });
     }
 
-    // Add event listeners for new buttons
-    // ==================== FIXED EVENT LISTENERS ====================
+    // Add event listeners for buttons
+
     document.querySelectorAll('.interview-btn').forEach(btn => {
         btn.addEventListener('click', e => {
             const id = parseInt(e.currentTarget.dataset.id);
@@ -189,10 +189,35 @@ if (filtered.length === 0) {
 
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', e => {
-            const id = parseInt(e.currentTarget.dataset.id);   // ← FIXED HERE
+            const id = parseInt(e.currentTarget.dataset.id);   
             jobs = jobs.filter(j => j.id !== id);
             renderJobs();
             updateDashboard();
+        });
+    });
+
+    // Event listeners for double-clicks to reset
+    document.querySelectorAll('.interview-btn').forEach(btn => {
+        btn.addEventListener('dblclick', e => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            const job = jobs.find(j => j.id === id);
+            if (job && job.status === 'interview') {
+                job.status = 'not_applied';
+                renderJobs();
+                updateDashboard();
+            }
+        });
+    });
+
+    document.querySelectorAll('.rejected-btn').forEach(btn => {
+        btn.addEventListener('dblclick', e => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            const job = jobs.find(j => j.id === id);
+            if (job && job.status === 'rejected') {
+                job.status = 'not_applied';
+                renderJobs();
+                updateDashboard();
+            }
         });
     });
 }
