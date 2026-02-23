@@ -161,6 +161,21 @@ if (filtered.length === 0) {
         });
     }
 
+     
 
-    
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+            currentTab = e.target.dataset.tab;
+            updateTabStyles();
+            renderJobs();
+        });
+    });
+
+    updateDashboard();
+    renderJobs();
+});
