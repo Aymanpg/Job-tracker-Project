@@ -185,9 +185,15 @@ if (filtered.length === 0) {
             }
         });
     });
-
-     
-
+    
+     document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const id = parseInt(e.target.dataset.id);
+            jobs = jobs.filter(j => j.id !== id);
+            renderJobs();
+            updateDashboard();
+        });
+    });     
 }
 
 // Initialize
