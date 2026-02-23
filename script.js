@@ -161,10 +161,11 @@ if (filtered.length === 0) {
         });
     }
 
-    // Add event listeners
+    // Add event listeners for new buttons
+    // ==================== FIXED EVENT LISTENERS ====================
     document.querySelectorAll('.interview-btn').forEach(btn => {
         btn.addEventListener('click', e => {
-            const id = parseInt(e.target.dataset.id);
+            const id = parseInt(e.currentTarget.dataset.id);
             const job = jobs.find(j => j.id === id);
             if (job && job.status !== 'interview') {
                 job.status = 'interview';
@@ -176,7 +177,7 @@ if (filtered.length === 0) {
 
     document.querySelectorAll('.rejected-btn').forEach(btn => {
         btn.addEventListener('click', e => {
-            const id = parseInt(e.target.dataset.id);
+            const id = parseInt(e.currentTarget.dataset.id);
             const job = jobs.find(j => j.id === id);
             if (job && job.status !== 'rejected') {
                 job.status = 'rejected';
@@ -185,15 +186,15 @@ if (filtered.length === 0) {
             }
         });
     });
-    
-     document.querySelectorAll('.delete-btn').forEach(btn => {
+
+    document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', e => {
-            const id = parseInt(e.target.dataset.id);
+            const id = parseInt(e.currentTarget.dataset.id);   // ← FIXED HERE
             jobs = jobs.filter(j => j.id !== id);
             renderJobs();
             updateDashboard();
         });
-    });     
+    });
 }
 
 // Initialize
