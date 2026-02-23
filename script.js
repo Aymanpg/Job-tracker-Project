@@ -161,6 +161,19 @@ if (filtered.length === 0) {
         });
     }
 
+    // Add event listeners
+    document.querySelectorAll('.interview-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const id = parseInt(e.target.dataset.id);
+            const job = jobs.find(j => j.id === id);
+            if (job && job.status !== 'interview') {
+                job.status = 'interview';
+                renderJobs();
+                updateDashboard();
+            }
+        });
+    });
+
      
 
 }
