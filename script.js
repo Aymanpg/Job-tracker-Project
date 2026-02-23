@@ -80,3 +80,34 @@ let jobs = [
         status: 'not_applied'
     }
 ];
+
+
+let currentTab = 'all';
+
+function getStatusClass(status) {
+    if (status === 'not_applied') return 'bg-blue-100 text-blue-800';
+    if (status === 'interview') return 'bg-green-100 text-green-800';
+    if (status === 'rejected') return 'bg-red-100 text-red-800';
+}
+
+function updateDashboard() {
+    const total = jobs.length;
+    const interview = jobs.filter(j => j.status === 'interview').length;
+    const rejected = jobs.filter(j => j.status === 'rejected').length;
+    document.getElementById('total-count').textContent = total;
+    document.getElementById('interview-count').textContent = interview;
+    document.getElementById('rejected-count').textContent = rejected;
+}
+
+function updateTabStyles() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        if (btn.dataset.tab === currentTab) {
+            btn.classList.add('bg-blue-500', 'text-white');
+            btn.classList.remove('bg-white', 'border', 'border-gray-300');
+        } else {
+            btn.classList.remove('bg-blue-500', 'text-white');
+            btn.classList.add('bg-white', 'border', 'border-gray-300');
+        }
+    });
+}
