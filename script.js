@@ -111,3 +111,56 @@ function updateTabStyles() {
         }
     });
 }
+
+function renderJobs() {
+    const container = document.getElementById('jobs-container');
+    container.innerHTML = '';
+
+    const filters = {
+        all: () => true,
+        interview: j => j.status === 'interview',
+        rejected: j => j.status === 'rejected'
+    };
+
+    const filtered = jobs.filter(filters[currentTab]);
+    const countText = `${filtered.length} job${filtered.length === 1 ? '' : 's'}`;
+    document.getElementById('jobs-count').textContent = countText;
+
+if (filtered.length === 0) {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.classList.add('text-center', 'py-20', 'border-2', 'border-dotted', 'border-blue-500', 'rounded', 'bg-white');
+        emptyDiv.innerHTML = `
+            <img src="Image/jobs.png" alt="No jobs" class="mx-auto h-12 w-12">
+            <h3 class="mt-2 text-lg font-medium text-gray-900">No jobs available</h3>
+            <p class="mt-1 text-sm text-gray-500">Check back soon for new job opportunities</p>
+        `;
+        container.appendChild(emptyDiv);
+    } else {
+        filtered.forEach(job => {
+            const card = document.createElement('div');
+            card.classList.add('bg-white', 'p-4', 'rounded', 'shadow');
+            card.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-semibold">${job.company}</h3>
+                        <p class="text-sm text-gray-600">${job.position}</p>
+                        <p class="text-sm text-gray-500">${job.location} · ${job.type} · ${job.salary}</p>
+                    </div>
+                    <button class="text-gray-400 hover:text-gray-600 delete-btn" data-id="${job.id}"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="mt-2">
+                    <span class="px-2 py-1 rounded text-sm ${getStatusClass(job.status)}">${job.status.toUpperCase().replace('_', ' ')}</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-600">${job.description}</p>
+                <div class="mt-4 flex space-x-2">
+                    <button class="interview-btn px-4 py-2 rounded text-white ${job.status === 'interview' ? 'bg-green-700 font-white' : 'bg-white border border-green-500 text-green-600'}" data-id="${job.id}">INTERVIEW</button>
+                    <button class="rejected-btn px-4 py-2 rounded text-white ${job.status === 'rejected' ? 'bg-red-700 font-white' : 'bg-white border border-red-500 text-red-600'}" data-id="${job.id}">REJECTED</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+
+    
+}
